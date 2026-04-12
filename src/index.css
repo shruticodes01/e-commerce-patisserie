@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+@theme {
+  --color-pink: hsl(349, 100%, 78%);
+  /* #FF8DA1 rgb(255,141,161)*/
+  --color-mint-blue: hsl(169, 100%, 78%);
+  /*#8DFFEB rgb(141,255,235)*/
+
+  --color-dusty-pink: hsl(359, 61%, 85%);
+  /*#F0C1C2 rgb(240, 193, 194)*/
+  --color-light-gray: hsl(60, 28%, 92%);
+  /*#F1F1E6 rgb(241, 241, 230)*/
+  --color-light-coral: hsl(20, 93%, 89%);
+  /*#FDD9C7 rgb(253, 217, 199)*/
+  --color-matcha: hsl(63, 35%, 66%);
+  /*#C4C78C rgb(196, 199, 140)*/
+}
+
+@media(max-width:48rem) {
+
+  .desktop__header {
+    display: none;
+  }
+}
+
+@media(min-width:48rem) {
+  .mobile__header {
+    display: none;
+  }
+
+  .desktop__header {
+    display: flex;
+  }
+}
