@@ -1,5 +1,6 @@
 import { ShoppingBag } from "lucide-react";
 import logoImg from "../../assets/crumbls2dxfdc.png";
+import Button from "../Button";
 
 export default function DesktopHeader({
   className,
@@ -86,13 +87,12 @@ export default function DesktopHeader({
             </a>
           </li>
           <li>
-            <a
+            <Button
               className={`hover:scale-105 focus:outline-0 focus-visible:outline-3 focus-visible:outline-offset-4 ${isScrolled ? "hover:text-pink focus-visible:outline-mint-blue focus-visible:text-pink active:text-pink" : "hover:text-mint-blue focus-visible:outline-pink focus-visible:text-mint-blue active:text-mint-blue"}`}
               role="menu-item"
-              href="#cart"
             >
               <ShoppingBag />
-            </a>
+            </Button>
           </li>
         </ul>
       </nav>

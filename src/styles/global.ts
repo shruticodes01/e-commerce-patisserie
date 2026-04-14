@@ -52,9 +52,11 @@ export const buttonVariants = {
   primary: "",
   outline: "",
   icon: "",
-  addItem: "",
+  addItem:
+    "bg-pink text-black hover:bg-mint-blue/60 hover:text-black focus-visible:ring-pink rounded-lg px-2 py-1 sm:px-2 sm:py-1 text-sm sm:text-base transition-colors duration-200 ease-in-out shadow-md cursor-pointer",
   removeItem: "",
-  viewMore: "",
+  viewDetails:
+    "bg-white text-black border-transparent hover:rounded-lg hover:outline-2 hover:outline-pink px-2 py-1 sm:px-2 sm:py-1 text-sm sm:text-base transition-colors duration-200 ease-in-out cursor-pointer",
 };
 
 /* Styles based on button sizes */

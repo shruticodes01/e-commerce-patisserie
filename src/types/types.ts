@@ -14,11 +14,11 @@ export type ButtonVariant =
   | "icon"
   | "addItem"
   | "removeItem"
-  | "viewMore";
+  | "viewDetails";
 
 export type ButtonSize = "sm" | "md" | "lg" | "xl";
 
-export interface ButtonProps {
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
   size?: ButtonSize;
   label?: string;
@@ -37,4 +37,5 @@ export interface ProductDataObj {
   stock: string;
   rating: number;
   image_url: string;
+  image_attr: string;
 }

@@ -26,6 +26,7 @@ export default function MobileHeader({
           aria-controls="mobile-nav"
           className={`w-fit h-fit p-2 absolute right-0 aspect-square z-9999 cursor-pointer text-black`}
           onClick={() => setIsMobileMenuVisible((menuVisible) => !menuVisible)}
+          type="button"
         >
           {isMobileMenuVisible ? (
             <X className="w-8 h-8 text-black" />
@@ -123,12 +124,14 @@ export default function MobileHeader({
           </li>
           <li className={`p-4`}>
             <Button
-              className={`hover:scale-105 hover:text-pink focus:outline-0 focus-visible:outline-3 focus-visible:outline-mint-blue focus-visible:outline-offset-4 focus-visible:text-pink active:text-pink`}
+              className={`hover:scale-105 hover:text-pink focus:outline-0 focus-visible:outline-3 focus-visible:outline-mint-blue focus-visible:outline-offset-4 focus-visible:text-pink active:text-pink relative`}
               onClick={() => {
                 setIsMobileMenuVisible((menuVisible) => !menuVisible);
               }}
+              type="button"
             >
               <ShoppingBag className="w-8 h-8" />
+              <span className="absolute -top-2 -right-2">0</span>
             </Button>
           </li>
         </ul>
