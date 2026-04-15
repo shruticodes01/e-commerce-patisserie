@@ -1,4 +1,4 @@
-import ProductList from "../../components/ProductList.tsx";
+import ProductList from "../../components/Product/ProductList.tsx";
 import Container from "../../layouts/Container.tsx";
 import { typography } from "../../styles/global.ts";
 import homeBanner from "../../assets/banner/ksenia-yakovleva-BygEl7uekRg-unsplash.jpg";

@@ -1,8 +1,8 @@
-import { useCart } from "../context/Cart/useCart";
-import { card } from "../styles/global";
-import type { ProductDataObj } from "../types/types";
-import { currencyFormatter } from "../utils/formatting";
-import Button from "./UI/Button";
+import { useCart } from "../../context/Cart/useCart";
+import { card } from "../../styles/global";
+import type { ProductDataObj } from "../../types/types";
+import { currencyFormatter } from "../../utils/formatting";
+import Button from "../UI/Button";
 
 export default function ProductCard({ dessert }: { dessert: ProductDataObj }) {
   const { addToCart } = useCart();

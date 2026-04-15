@@ -29,6 +29,11 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   onClick?: () => void;
 }
 
+export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  label: string;
+  id: string;
+}
+
 export interface ProductDataObj {
   id: number;
   name: string;
@@ -49,11 +54,4 @@ export interface CartContextType {
   items: ItemObj[];
   addToCart: (product: ProductDataObj) => void;
   removeFromCart: (productID: number) => void;
-  // updateItemTotal: (productID: number, amount: number) => void;
 }
-
-// export interface ModalType {
-//   children: React.ReactNode;
-//   open: boolean;
-//   className?: string;
-// }

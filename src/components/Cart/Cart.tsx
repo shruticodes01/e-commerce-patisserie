@@ -7,10 +7,14 @@ import CartItem from "./CartItem.tsx";
 
 export default function Cart() {
   const { items, addToCart, removeFromCart } = useCart();
-  const { progress, hideCart } = useUserProgress();
+  const { progress, hideCart, showCheckout } = useUserProgress();
 
   const handleCloseCart = () => {
     hideCart();
+  };
+
+  const handleCheckout = () => {
+    showCheckout();
   };
 
   const cartTotal = items.reduce((totalPrice, item) => {
@@ -19,11 +23,11 @@ export default function Cart() {
 
   return (
     <Modal
-      className="max-w-[60%] bg-pink-50 mx-auto my-auto p-6"
+      className="max-w-[60%] bg-pink-50 mx-auto my-auto p-6 animate-slide-in-from-top"
       open={progress === "cart"}
     >
       <div className="w-full flex flex-col gap-4">
-        <h2 className="mb-4">Your Cart</h2>
+        <h2 className="mb-4 text-2xl font-bold">Your Cart</h2>
 
         <ul className="flex flex-col gap-2">
           {items.map((item) => {
@@ -46,7 +50,11 @@ export default function Cart() {
           <Button variant="text" onClick={handleCloseCart}>
             Close
           </Button>
-          {items.length >= 1 && <Button variant="primary">Checkout</Button>}
+          {items.length >= 1 && (
+            <Button variant="primary" onClick={handleCheckout}>
+              Checkout
+            </Button>
+          )}
         </div>
       </div>
     </Modal>

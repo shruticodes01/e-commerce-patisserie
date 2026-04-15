@@ -1,8 +1,8 @@
 // import { productsData } from "../data/productsData.ts";
 import { useEffect, useState } from "react";
-import { card } from "../styles/global.ts";
+import { card } from "../../styles/global.ts";
 import ProductCard from "./ProductCard.tsx";
-import type { ProductDataObj } from "../types/types.ts";
+import type { ProductDataObj } from "../../types/types.ts";
 
 export default function ProductList() {
   const [loadedDesserts, setLoadedDesserts] = useState([]);

@@ -26,7 +26,8 @@ export default function Modal({
   return createPortal(
     <dialog
       ref={dialogRef}
-      className={`w-full border border-transparent rounded-md shadow-[0_0_0.625rem_rgba(0,0,0,0.5)] animate-slide-in-from-top ${className}`}
+      className={`w-full border border-transparent rounded-md shadow-[0_0_0.625rem_rgba(0,0,0,0.5)] ${className}`}
+      id="modal"
     >
       {children}
     </dialog>,

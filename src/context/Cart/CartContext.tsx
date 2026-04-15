@@ -9,7 +9,6 @@ const CartContext = createContext<CartContextType>({
   items: [],
   addToCart: (_product: ProductDataObj) => {},
   removeFromCart: (_productID: number) => {},
-  // updateItemTotal: (productID, amount) => {},
 });
 
 export default CartContext;
@@ -85,36 +84,10 @@ export function CartContextProvider({
     });
   };
 
-  // const updateItemTotal = (productID, amount) => {
-  //   setShoppingCart((prevShoppingCart) => {
-  //     const updatedItems = [...prevShoppingCart.items];
-  //     const updatedItemIndex = updatedItems.findIndex(
-  //       (item) => item.id === productID,
-  //     );
-
-  //     const updatedItem = {
-  //       ...updatedItems[updatedItemIndex],
-  //     };
-
-  //     updatedItem.quantity += amount;
-
-  //     if (updatedItem.quantity <= 0) {
-  //       updatedItems.splice(updatedItemIndex, 1);
-  //     } else {
-  //       updatedItems[updatedItemIndex] = updatedItem;
-  //     }
-
-  //     return {
-  //       items: updatedItems,
-  //     };
-  //   });
-  // };
-
   const cartContext = {
     items: shoppingCart.items,
     addToCart,
     removeFromCart,
-    // updateItemTotal,
   };
 
   console.log(cartContext);
