@@ -51,6 +51,7 @@ export const card = {
 export const buttonVariants = {
   primary: "",
   outline: "",
+  text: "",
   icon: "",
   addItem:
     "bg-pink text-black hover:bg-mint-blue/60 hover:text-black focus-visible:ring-pink rounded-lg px-2 py-1 sm:px-2 sm:py-1 text-sm sm:text-base transition-colors duration-200 ease-in-out shadow-md cursor-pointer",

@@ -14,6 +14,34 @@
   /*#FDD9C7 rgb(253, 217, 199)*/
   --color-matcha: hsl(63, 35%, 66%);
   /*#C4C78C rgb(196, 199, 140)*/
+
+  --animate-slide-in-from-top: fade-slide-in-from-top 0.3s ease-in-out;
+
+  @keyframes fade-slide-in-from-top {
+    0% {
+      opacity: 0;
+      transform: translateY(-50px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  --animate-slide-in-from-right: fade-slide-in-from-right 0.3s ease-in-out;
+
+  @keyframes fade-slide-in-from-right {
+    0% {
+      opacity: 0;
+      transform: translateX(50px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
 }
 
 @media(max-width:48rem) {

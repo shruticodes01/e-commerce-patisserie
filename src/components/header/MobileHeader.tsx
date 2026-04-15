@@ -1,14 +1,18 @@
 import { useState } from "react";
-import Button from "../Button";
+import Button from "../UI/Button";
 import LogoImg from "../../assets/crumbls2dxfdc.png";
 import { Menu, ShoppingBag, X } from "lucide-react";
 
 export default function MobileHeader({
   className,
   isScrolled,
+  totalCartItems,
+  showCart,
 }: {
   className?: string;
   isScrolled: boolean | string;
+  totalCartItems: number;
+  showCart: () => void;
 }) {
   const [isMobileMenuVisible, setIsMobileMenuVisible] = useState(false);
 
@@ -126,12 +130,15 @@ export default function MobileHeader({
             <Button
               className={`hover:scale-105 hover:text-pink focus:outline-0 focus-visible:outline-3 focus-visible:outline-mint-blue focus-visible:outline-offset-4 focus-visible:text-pink active:text-pink relative`}
               onClick={() => {
+                showCart();
                 setIsMobileMenuVisible((menuVisible) => !menuVisible);
               }}
               type="button"
             >
               <ShoppingBag className="w-8 h-8" />
-              <span className="absolute -top-2 -right-2">0</span>
+              <span className="absolute -top-2 -right-2 px-2 bg-black text-mint-blue rounded-full">
+                {totalCartItems}
+              </span>
             </Button>
           </li>
         </ul>

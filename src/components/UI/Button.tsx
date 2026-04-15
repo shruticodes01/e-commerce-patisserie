@@ -1,5 +1,5 @@
-import type { ButtonProps } from "../types/types.ts";
-import { buttonSize, buttonVariants } from "../styles/global.ts";
+import type { ButtonProps } from "../../types/types.ts";
+import { buttonSize, buttonVariants } from "../../styles/global.ts";
 
 export default function Button({
   variant = "primary",

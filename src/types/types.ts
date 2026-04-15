@@ -11,6 +11,7 @@ export interface ContainerProps {
 export type ButtonVariant =
   | "primary"
   | "outline"
+  | "text"
   | "icon"
   | "addItem"
   | "removeItem"
@@ -39,3 +40,20 @@ export interface ProductDataObj {
   image_url: string;
   image_attr: string;
 }
+
+export interface ItemObj extends ProductDataObj {
+  quantity: number;
+}
+
+export interface CartContextType {
+  items: ItemObj[];
+  addToCart: (product: ProductDataObj) => void;
+  removeFromCart: (productID: number) => void;
+  // updateItemTotal: (productID: number, amount: number) => void;
+}
+
+// export interface ModalType {
+//   children: React.ReactNode;
+//   open: boolean;
+//   className?: string;
+// }

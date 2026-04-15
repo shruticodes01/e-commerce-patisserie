@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
-import DesktopHeader from "./DesktopHeader";
-import MobileHeader from "./MobileHeader";
+import DesktopHeader from "./DesktopHeader.tsx";
+import MobileHeader from "./MobileHeader.tsx";
+import { useCart } from "../../context/Cart/useCart.ts";
+import { useUserProgress } from "../../context/UserProgress/useUserProgress.ts";
 
 export default function Header() {
+  const { items } = useCart();
+  const { showCart } = useUserProgress();
+
   const [isScrolled, setIsScrolled] = useState<boolean | string>(false);
 
   useEffect(() => {
@@ -18,10 +23,28 @@ export default function Header() {
       window.addEventListener("scroll", changeHeaderBackgroundOnScroll);
   }, []);
 
+  const totalCartItems = items.reduce((totalNumberOfItems, item) => {
+    return totalNumberOfItems + item.quantity;
+  }, 0);
+
+  const handleShowCart = () => {
+    showCart();
+  };
+
   return (
     <>
-      <MobileHeader className="mobile__header" isScrolled={isScrolled} />
-      <DesktopHeader className="desktop__header" isScrolled={isScrolled} />
+      <MobileHeader
+        className="mobile__header"
+        isScrolled={isScrolled}
+        totalCartItems={totalCartItems}
+        showCart={handleShowCart}
+      />
+      <DesktopHeader
+        className="desktop__header"
+        isScrolled={isScrolled}
+        totalCartItems={totalCartItems}
+        showCart={handleShowCart}
+      />
     </>
   );
 }
