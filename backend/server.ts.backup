@@ -1,0 +1,268 @@
+import fs from "node:fs/promises";
+import express, { Request, Response } from "express";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const app = express();
+const PORT = 5000;
+
+// Middleware
+app.use(express.json());
+app.use(express.static("public"));
+
+// CORS headers
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
+  next();
+});
+
+// 1. GET desserts (customer shop)
+app.get("/api/desserts", async (req: Request, res: Response) => {
+  try {
+    const desserts = await fs.readFile("./data/desserts.json", "utf8");
+    res.json(JSON.parse(desserts));
+  } catch (error) {
+    console.error("Error reading desserts.json:", error);
+    res.status(500).json({ message: "Desserts not found" });
+  }
+});
+
+// 2. POST orders (customer checkout)
+app.post("/api/orders", async (req: Request, res: Response) => {
+  console.log("✅ RUNNING NO-TRIM VALIDATION");
+  console.log("📨 POST /api/orders handler reached", req.body);
+  console.log("→ req.body:", req.body);
+
+  const orderData = req.body.order;
+
+  if (!orderData || !orderData.items) {
+    return res.status(400).json({ message: "Missing order data." });
+  }
+
+  if (!Array.isArray(orderData.items) || orderData.items.length === 0) {
+    return res.status(400).json({ message: "No items in order." });
+  }
+
+  const customer = orderData.customer;
+
+  if (
+    !customer ||
+    !customer.email ||
+    !customer.fullName ||
+    !customer.street ||
+    !customer["postal-code"] ||
+    !customer.city
+  ) {
+    return res.status(400).json({ message: "Missing customer data." });
+  }
+
+  console.log("→ customer:", customer);
+
+  // Save order
+  const newOrder = {
+    ...orderData,
+    id: (Math.random() * 1000).toString(),
+    orderDate: new Date().toISOString(),
+  };
+
+  let allOrders = [];
+
+  try {
+    const orders = await fs.readFile("./data/orders.json", "utf8");
+    allOrders = JSON.parse(orders);
+  } catch (error) {
+    console.error("Error reading orders.json:", error);
+    allOrders = [];
+  }
+
+  allOrders.push(newOrder);
+
+  try {
+    await fs.writeFile(
+      "./data/orders.json",
+      JSON.stringify(allOrders, null, 2),
+    );
+    console.log("✅ Order written to orders.json:", newOrder.id);
+    res.status(201).json({ message: "Order created!", orderId: newOrder.id });
+  } catch (error) {
+    console.error("Error writing orders.json:", error);
+    res.status(500).json({ message: "Failed to save order" });
+  }
+});
+
+// 404 handler
+app.use((req: Request, res: Response) => {
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
+  res.status(404).json({ message: "Route not found" });
+});
+
+app.listen(PORT, () => {
+  console.log(`🧁 Patisserie API: http://localhost:${PORT}`);
+});
+
+// import fs from "node:fs/promises";
+// import express, { Request, Response, NextFunction } from "express";
+// // import cors from "cors";
+// import dotenv from "dotenv";
+
+// dotenv.config();
+
+// const app = express();
+// const PORT = 5000;
+
+// // Middleware
+// app.use(express.json());
+// //  app.use(cors());
+// app.use(express.static("public"));
+
+// // CORS
+
+// // app.use(express.json());
+// // app.use(express.static("public"));
+
+// app.use((req: Request, res: Response, next: NextFunction) => {
+//   res.setHeader("Access-Control-Allow-Origin", "*");
+//   res.setHeader("Access-Control-Allow-Methods", "GET, POST");
+//   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+//   next();
+// });
+
+// // 🧁 BAKERY ROUTES
+
+// // 1. GET products (customer shop)
+// app.get("./api/desserts", async (req: Request, res: Response) => {
+//   try {
+//     const desserts = await fs.readFile("./data/desserts.json", "utf8");
+//     res.json(JSON.parse(desserts));
+//   } catch {
+//     res.status(500).json({ message: "Desserts not found" });
+//   }
+// });
+
+// // 2. POST orders (customer checkout)
+// app.post("./api/orders", async (req: Request, res: Response) => {
+//   console.log(req.body);
+
+//   const orderData = req.body.order;
+
+//   if (!orderData || !orderData.items) {
+//     return res.status(400).json({ message: "Missing order data." });
+//   }
+
+//   if (!Array.isArray(orderData.items) || orderData.items.length === 0) {
+//     return res.status(400).json({ message: "No items in order." });
+//   }
+
+//   // If items not available
+//   if (
+//     orderData === null ||
+//     orderData.items === null ||
+//     orderData.items.length === 0
+//   ) {
+//     return res.status(400).json({ message: "Missing data." });
+//   }
+
+//   // Customer validation
+//   if (
+//     orderData.customer.email === null ||
+//     !orderData.customer.email.includes("@") ||
+//     orderData.customer.fullName === null ||
+//     orderData.customer.fullName.trim() === "" ||
+//     orderData.customer.street === null ||
+//     orderData.customer.street.trim() === "" ||
+//     orderData.customer["postal-code"] === null ||
+//     orderData.customer["postal-code"].trim() === "" ||
+//     orderData.customer.city === null ||
+//     orderData.customer.city.trim() === ""
+//   ) {
+//     return res.status(400).json({
+//       message: "Missing data: Email, full name, street, postal code or city.",
+//     });
+//   }
+
+//   // Save order
+//   const newOrder = {
+//     ...orderData,
+//     id: (Math.random() * 1000).toString(),
+//     // orderDate: new Date().toISOString(),
+//   };
+
+//   // let allOrders;
+
+//   // try {
+//   //   const orders = await fs.readFile("./data/orders.json", "utf8");
+//   //   allOrders = JSON.parse(orders);
+//   //   allOrders.push(newOrder);
+//   // } catch (error) {
+//   //   console.error("Error reading orders.json", error);
+//   //   // if file is missing or invalid, start from an empty array
+
+//   //   allOrders = [];
+//   // }
+
+//   try {
+//     const orders = await fs.readFile("./data/orders.json", "utf8");
+//     const allOrders = JSON.parse(orders);
+
+//     allOrders.push(newOrder);
+
+//     //write back
+//     await fs.writeFile(
+//       "./data/orders.json",
+//       JSON.stringify(allOrders, null, 2),
+//     );
+//     console.log("✅ Order written to orders.json:", newOrder.id);
+//     res.status(201).json({ message: "Order created!", orderId: newOrder.id });
+//   } catch (error) {
+//     console.error("Error writing orders.json", error);
+//     res.status(500).json({ message: "Failed to save order" });
+//   }
+// });
+
+// // app.post("/api/test", (req, res) => {
+// //   console.log("✅ /api/test hit", req.body);
+// //   res.json({ message: "Test received" });
+// // });
+
+// // 3. GET orders (admin view all orders)
+// app.get("/api/orders", async (req: Request, res: Response) => {
+//   try {
+//     const orders = await fs.readFile("./data/orders.json", "utf8");
+//     res.json(JSON.parse(orders));
+//   } catch {
+//     res.status(500).json({ message: "Orders not found" });
+//   }
+// });
+
+// // 404 handler
+// app.use((req: Request, res: Response) => {
+//   if (req.method === "OPTIONS") {
+//     return res.sendStatus(200);
+//   }
+//   res.status(404).json({ message: "Route not found" });
+// });
+
+// app.listen(PORT, () => {
+//   console.log(`🧁 Patisserie API: http://localhost:${PORT}`);
+// });
+
+// // app.get("/api/debug", async (req, res) => {
+// //   try {
+// //     const code = await fs.readFile(__dirname + "/server.ts", "utf8");
+// //     res.json({
+// //       lines: code.split("\n").length,
+// //       cwd: process.cwd(),
+// //     });
+// //   } catch (error) {
+// //     console.error("Error reading server.ts:", error);
+// //     res.status(500).json({ message: "Could not read server code" });
+// //   }
+// // });
